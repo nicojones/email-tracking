@@ -105,7 +105,7 @@ class ParentModel {
         $res->execute($params);
         return $res->fetchAll(\PDO::FETCH_CLASS, $className);
     }
-    
+
     /**
      * Runs a given $query string and returns the PDO object or the fetched results,
      * indexed by the first column.
@@ -124,7 +124,7 @@ class ParentModel {
             return $rows;
         }
     }
-    
+
     /**
      * Gets a single result from a given table name and a given column name
      * @param string $tableName
@@ -133,13 +133,13 @@ class ParentModel {
      * @return array with the fetched row
      */
     public function getRow($tableName, $columnValue, $columnName = 'id') {
-        $query = 'SELECT `' . $columnName . '` AS `index`, t.* FROM ' . 
+        $query = 'SELECT `' . $columnName . '` AS `index`, t.* FROM ' .
                  $tableName . ' t WHERE t.`' . $columnName . '` = :columnValue LIMIT 1';
         $result = $this->query($query, array(':columnValue' => $columnValue), TRUE);
         return $result ? $result[0] : array();
-        
+
     }
-    
+
     /**
      * Updates a given row of a given table to a given value
      * @param string $tableName Name of the table to update

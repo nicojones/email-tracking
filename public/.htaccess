@@ -1,51 +1,40 @@
 #suphp_configpath /home2/mumimher/public_html/
 DirectoryIndex app.php
 
-<FilesMatch "\.(ini|php|htaccess|sqlite*|sql|x?html|xml|cgi|pl|htm)">
-  order allow,deny
-  deny from all
-</FilesMatch>
-<Files app.php>
-    order allow,deny
-    allow from all
-</Files>
-<FilesMatch "\.(xml|txt|html|js|css|gif|png|jpg)$">
-    order allow,deny
-    allow from all
-</FilesMatch>
+ <FilesMatch "\.(ini|php|htaccess|sqlite*|sql|x?html|xml|cgi|pl|htm)">
+   order allow,deny
+   deny from all
+ </FilesMatch>
+ <Files app.php>
+     order allow,deny
+     allow from all
+ </Files>
 
-# Turn on Expires and set default to 0
-ExpiresActive On
-ExpiresDefault A0
- 
-# Set up caching on media files for 1 year (forever?)
-<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
-ExpiresDefault A29030400
-Header append Cache-Control "public"
-</FilesMatch>
- 
-# Set up caching on media files for 1 week
-<FilesMatch "\.(gif|jpg|jpeg|png|swf)$">
-ExpiresDefault A604800
-Header append Cache-Control "public"
-</FilesMatch>
- 
-# Set up 2 Hour caching on commonly updated files
-<FilesMatch "\.(xml|txt|html|js|css)$">
-ExpiresDefault A7200
-Header append Cache-Control "proxy-revalidate"
-</FilesMatch>
- 
+ <FilesMatch "\.(xml|txt|html|js|css|gif|png|jpg)$">
+     order allow,deny
+     allow from all
+ </FilesMatch>
+# <FilesMatch "\.(gif|jpg|jpeg|png|swf)$">
+# ExpiresDefault A604800
+# Header append Cache-Control "public"
+# </FilesMatch>
+
+# # Set up 2 Hour caching on commonly updated files
+# <FilesMatch "\.(xml|txt|html|js|css)$">
+# ExpiresDefault A7200
+# Header append Cache-Control "proxy-revalidate"
+# </FilesMatch>
+
 # Force no caching for dynamic files
-<FilesMatch "\.(php|cgi|pl|htm)$">
-ExpiresActive Off
-Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-transform"
-Header set Pragma "no-cache"
-</FilesMatch>
+# <FilesMatch "\.(php|cgi|pl|htm)$">
+# ExpiresActive Off
+# Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-transform"
+# Header set Pragma "no-cache"
+# </FilesMatch>
 
-<FilesMatch ".(eot|ttf|otf|woff)">
-    Header set Access-Control-Allow-Origin "*"
-</FilesMatch>
+# <FilesMatch ".(eot|ttf|otf|woff)">
+#     Header set Access-Control-Allow-Origin "*"
+# </FilesMatch>
 
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript

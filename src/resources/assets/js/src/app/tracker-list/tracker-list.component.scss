@@ -1,0 +1,24 @@
+@import '~variables.scss';
+
+.tracker-link {
+    > span, > div {
+        float: left;
+    }
+}
+.tracker-img {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    &.enabled {
+        background-color: $trackerEnabled;
+    }
+    &.inactive {
+        background-color: $trackerInactive;
+    }
+} 
+
+.bottom-border {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #aaa;
+}

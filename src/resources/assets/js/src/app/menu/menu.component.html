@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="/home">{{config.title}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" routerLink="/new">New tracking</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/about">About</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="trackerList.length">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+           (click)="dropdownList = !dropdownList"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{trackerList[0].user_secret | slice:0:15}}
+          </a>
+          <div class="dropdown-menu" [hidden]="!dropdownList">
+            <span *ngFor="let tracker of trackerList" [ngSwitch]="tracker.search_type">
+              <!-- <a class="dropdown-item" *ngSwitchCase="'list'" routerLink="{{'/trackers/'+tracker.user_secret}}">list: {{tracker.user_secret}}</a> -->
+              <a class="dropdown-item" *ngSwitchCase="'secret'" routerLink="{{'/tracker/'+tracker.secret}}">
+                <span class="mini-active" [class.enabled]="tracker.active" [class.inactive]="!tracker.active"></span>
+                {{tracker.tname || '&lt;no name&gt;'}} <small>({{tracker.visits}})</small>
+              </a>
+            </span>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li> -->
+      </ul>
+      <div class="nav-item dropdown my-2 my-lg-0">
+        <input #searchQuery id="search-box" class="form-control mr-sm-2" type="search"
+                placeholder="search" (click)="dropdownSearch = true"/>
+        <div class="dropdown-menu search-list" [hidden]="!trackerSearch.length || !dropdownSearch">
+          <span *ngFor="let tracker of trackerSearch" [ngSwitch]="tracker.search_type" class="search-result">
+            <a *ngSwitchCase="'list'" routerLink="{{'/trackers/'+tracker.user_secret}}">
+              <span class="mini-active"></span>
+              list: {{tracker.user_secret}}
+            </a>
+            <a *ngSwitchCase="'secret'" routerLink="{{'/tracker/'+tracker.secret}}">
+              <span class="mini-active" [class.enabled]="tracker.active" [class.inactive]="!tracker.active"></span>
+              {{tracker.tname || '&lt;no name&gt;'}} <small>({{tracker.visits}})</small>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="menu-overlay" *ngIf="dropdownList || dropdownSearch"
+   (click)="dropdownList = dropdownSearch = false"></div>

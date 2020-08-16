@@ -1,0 +1,71 @@
+@import '~variables.scss';
+.px1-box {
+    position:relative;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 0 4px 0 #666;
+
+    width: 90%;
+    height: 300px;
+}
+.px1-box.enabled {
+    background-color: $trackerEnabled;
+    .px1-msg {
+        color: $trackerEnabledColor;
+    }
+}
+.px1-box.inactive {
+    background-color: $trackerInactive;
+    .px1-msg {
+        color: $trackerInactiveColor;
+    }
+}
+.px1-msg {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 25%;
+    left: 0;
+    text-align: center !important;
+}
+.px1 {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 4px 0;
+}
+
+.tracker-input {
+    width: 300px;
+    text-align: center;
+}
+small {
+    // width: 50%;
+    /* display: inline-block; */
+}
+hr {
+    // width: 51%;
+}
+label {
+    position: relative;
+    // width: 50%;
+}
+.save-button {
+    //position: absolute;
+    //top: 24px;
+    //right: 35px;
+}
+
+.noborder {
+    border: none;
+}
+.wide {
+    width: 1000%;
+}
+
+.my-card {
+    margin-left: 10px;
+    min-height: 350px;
+    margin-bottom: 10px;
+}

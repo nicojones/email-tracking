@@ -34,7 +34,7 @@ class AppKernel {
      * @throws \Exception When a requested <b>Controller</b> or Controller-><b>action</b>() are requested but do not exist.
      */
     public static function init() {
-        
+
         /**
          * We define the encoding
          */
@@ -76,7 +76,7 @@ class AppKernel {
             ->load(__ROOT__ . '/src/config/routing.ini', TRUE, 'Routing')
             ->loadVendors();
 
-//        ddie($config);
+        // ddie($config);
         /**
          * Set the language:
          */
@@ -86,14 +86,14 @@ class AppKernel {
          * Get called action
          */
         $routeKey = Router::matchRoute();
-        $route = $config->get('Routing', $routeKey); 
+        $route = $config->get('Routing', $routeKey);
         list($controllerName, $action) = explode('@', $route['action']);
 
         /**
          * We run the hook 'exec_beforestart' to allow for preloads.
          */
         $hooks->do_action('exec_beforestart', ['controller' => $controllerName, 'action' => $action]);
-        
+
         /**
          * Call requested action process
          */
@@ -146,6 +146,7 @@ class AppKernel {
                                 'message' => 'Please login to continue',
                                 'redirect' => $location]]));
                     } else {
+                        die('__reload2');
                         header('Location: ' . $location);
                         die;
                     }

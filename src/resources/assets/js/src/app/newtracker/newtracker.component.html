@@ -1,0 +1,18 @@
+<div class="col-8">
+  <p>
+    This app was created to learn Angular 6.<br>
+    You can create a tracker (an image that loads remotely) by entering a name in the &lt;input&gt; below.
+    Click "Add +" and the tracker will be created. More instructions in the next page.
+  </p>
+</div>
+<div class="col-12">
+  <label>
+    enter a name for the tracker
+    <input [(ngModel)]="tracker.tname" class="form-control" placeholder="name" autofocus/>
+  </label>
+  <div class="w-100"></div>
+  <label [hidden]="!tracker.tname">click to create tracker
+    <br>
+    <button class="btn btn-primary btn-lg" (click)="createNew()">Add +</button>
+  </label>
+</div>

@@ -1,0 +1,27 @@
+.container-content {
+    padding-top: 30px;
+    padding-bottom: 50px;
+    // padding-left: 30px;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    min-height: 20px;
+    background-color: #eee;
+    width: 100%;
+}
+#footer > small {
+    position: relative;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+#footer > small.about {
+    float: left;
+    @media (max-width: 500px) {
+        display: none;
+    }
+}
+#footer > small.name {
+    float: right;
+}

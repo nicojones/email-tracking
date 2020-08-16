@@ -1,0 +1,13 @@
+  <div class="col">
+    <ul class="list-unstyled" *ngIf="trackers && trackers.length">
+      <li class="media bottom-border" *ngFor="let tracker of trackers">
+        <a routerLink="/tracker/{{tracker.secret}}" class="tracker-link">
+          <span class="mr-3 tracker-img" [class.enabled]="tracker.active" [class.inactive]="!tracker.active"></span>
+          <div class="media-body">
+            <h5 class="mt-0 mb-1">{{tracker.tname}}</h5>
+            {{tracker.visits}} visits
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>

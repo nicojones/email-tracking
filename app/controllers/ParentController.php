@@ -121,7 +121,7 @@ class ParentController {
     * @var mixed $fallback if not null, would be taken as the default value. Otw the parameter is required.
     * @return mixed $_GET[$key] or $fallback
     */
-    function getGet($key, $fallback = NULL) {         
+    function getGet($key, $fallback = NULL) {
         $value = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
         if (empty($value) && isset($_GET[$key])) {
             $value = $_GET[$key];
@@ -140,7 +140,7 @@ class ParentController {
     * @var mixed $fallback if not null, would be taken as the default value. Otw the parameter is required.
     * @return mixed $_POST[$key] or $fallback
     */
-    function getPost($key, $fallback = NULL) {         
+    function getPost($key, $fallback = NULL) {
         $value = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
         if (empty($value) && isset($_POST[$key])) {
             $value = $_POST[$key];
@@ -266,7 +266,7 @@ class ParentController {
             echo $fullPath;
         }
     }
-    
+
     /**
      * Returns the web path for a given Route name
      * @param string $path The path identifier ('Home', 'Login', ...)
@@ -306,7 +306,7 @@ class ParentController {
             echo $this->path . $uri;
         }
     }
-    
+
     /**
      * Alias for ::path with $return = TRUE. Use it for controllers
      * @param string $path The path identifier ('Home', 'Login', ...)
@@ -328,6 +328,7 @@ class ParentController {
         if ($this->ajax) {
             return $this->json(['redirect' => $path]);
         } else {
+            die('__reload0');
             header ('Location: ' . $path);
             die();
         }
@@ -425,7 +426,7 @@ class ParentController {
         $this->add('_footer', $footer);
         return $this;
     }
-    
+
     /**
      * Sets a title for the website (different from the default one)
      * @param string $title
@@ -436,7 +437,7 @@ class ParentController {
         $this->vars['title'] = $title;
         return $this;
     }
-    
+
     /**
      * Sets a favicon for the website (different from the default one)
      * @param string $favicon Route to the favicon asset
@@ -519,7 +520,7 @@ class ParentController {
             throw new \Exception(str_replace('[[FILE]]', $file, $this->config->get('Exceptions', 'VIEW_NOT_FOUND')));
         }
     }
-    
+
     /**
      * Outputs the correspondent header for the given HTTP code, on the form header('HTTP/1.0 404 Not Found');
      * See description of the status codes in the provided url

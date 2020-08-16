@@ -88,19 +88,19 @@
 
             /* Else: we set the language based on $_GET (if set) or based on the browser language */
             } else {
-                $preferredLanguage = isset($_GET['lang']) ? $_GET['lang'] : $this->acceptLang;
+                $preferredLanguage = isset($_GET['lang']) ? $_GET['lang'] : $this->languages['default'];
                 $lang = $this->get_user_language($preferredLanguage);
 
                 $_SESSION['lang'] = $lang;
-                $uri = explode('?', $_SERVER['REQUEST_URI']);
+//                 $uri = explode('?', $_SERVER['REQUEST_URI']);
 
-                if (isset($_GET['noredirect'])) {
-                    $uri[0] = substr($uri[0],0,strlen($uri[0])-3);
-                }
+//                 if (isset($_GET['noredirect'])) {
+//                     $uri[0] = substr($uri[0],0,strlen($uri[0])-3);
+//                 }
 
-                $this->translations = Service::getLanguage($lang);
-
-                header ("Location: " . $uri[0]);
+//                 $this->translations = Service::getLanguage($lang);
+//                 die('__reload1');
+//                 header ("Location: " . $uri[0]);
             }
         }
 
