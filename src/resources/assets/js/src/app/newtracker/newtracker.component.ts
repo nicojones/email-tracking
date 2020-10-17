@@ -1,13 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TrackerService } from '../tracker.service';
 
 import { Tracker } from '../tracker';
-import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 
-import { environment as env } from '../../environments/environment';
 
 @Component({
   selector: 'app-newtracker',
@@ -16,32 +14,32 @@ import { environment as env } from '../../environments/environment';
     './newtracker.component.scss'
   ]
 })
-export class NewTrackerComponent implements OnInit {
+export class NewTrackerComponent {
 
-  @Input() tracker: Tracker;
-  public env: Object;
+  public tracker = new Tracker();
 
-  constructor( 
+  public readonly addText: string = 'Add +';
+
+  public loadingText: string = null;
+
+  constructor (
     private trackerService: TrackerService,
     private location: Location,
     private router: Router
-    ) { 
-      this.env = env
-      this.tracker = new Tracker;
-    }
-
-  ngOnInit() {
-    
+  ) {
   }
 
-  createNew(): void {
-    this.trackerService.createNew(this.tracker)
-      .subscribe(tracker => {
-        console.log(tracker)
-        this.tracker = tracker
+  createNew (): void {
+    this.loadingText = 'Creating...';
+    this.trackerService.createNew({ ...this.tracker, user_secret: TrackerService.userSecret })
+    .subscribe(
+      (tracker: Tracker) => {
+        this.loadingText = null;
+        this.tracker = tracker;
 
-        this.router.navigate(['/tracker', tracker.secret])
-      }
+        this.router.navigate(['/tracker', tracker.secret]);
+      },
+      () => this.loadingText = null
     );
   }
 

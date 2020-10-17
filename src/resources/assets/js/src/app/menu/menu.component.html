@@ -4,7 +4,7 @@
      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -15,11 +15,11 @@
         </li>
         <li class="nav-item dropdown" *ngIf="trackerList.length">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-           (click)="dropdownList = !dropdownList"
+           (click)="toggleDropdown = !toggleDropdown"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{trackerList[0].user_secret | slice:0:15}}
           </a>
-          <div class="dropdown-menu" [hidden]="!dropdownList">
+          <div class="dropdown-menu" [hidden]="!toggleDropdown">
             <span *ngFor="let tracker of trackerList" [ngSwitch]="tracker.search_type">
               <!-- <a class="dropdown-item" *ngSwitchCase="'list'" routerLink="{{'/trackers/'+tracker.user_secret}}">list: {{tracker.user_secret}}</a> -->
               <a class="dropdown-item" *ngSwitchCase="'secret'" routerLink="{{'/tracker/'+tracker.secret}}">
@@ -35,8 +35,8 @@
       </ul>
       <div class="nav-item dropdown my-2 my-lg-0">
         <input #searchQuery id="search-box" class="form-control mr-sm-2" type="search"
-                placeholder="search" (click)="dropdownSearch = true"/>
-        <div class="dropdown-menu search-list" [hidden]="!trackerSearch.length || !dropdownSearch">
+                placeholder="search" (click)="toggleSearch = true"/>
+        <div class="dropdown-menu search-list" [hidden]="!trackerSearch.length || !toggleSearch">
           <span *ngFor="let tracker of trackerSearch" [ngSwitch]="tracker.search_type" class="search-result">
             <a *ngSwitchCase="'list'" routerLink="{{'/trackers/'+tracker.user_secret}}">
               <span class="mini-active"></span>
@@ -51,5 +51,5 @@
       </div>
     </div>
   </nav>
-  <div class="menu-overlay" *ngIf="dropdownList || dropdownSearch"
-   (click)="dropdownList = dropdownSearch = false"></div>
+  <div class="menu-overlay" *ngIf="toggleDropdown || toggleSearch"
+   (click)="toggleDropdown = toggleSearch = false"></div>

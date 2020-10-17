@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import { NotifierService } from 'angular-notifier';
 //import { NgxNotificationService } from 'ngx-notification';
 import { ToastrService } from 'ngx-toastr';
- 
+
 import { Observable, of } from 'rxjs';
 import { catchError, tap, debounceTime } from 'rxjs/operators';
 
@@ -14,13 +14,10 @@ import { Config } from './config';
 
 import { Tracker } from './tracker';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
- 
 @Injectable({ providedIn: 'root' })
-
 export class TrackerService {
+
+  public static userSecret: string = null;
 
   private imageUrl = env.API_BASE_URL + '/image';
   private apiUrl   = env.API_BASE_URL + '/api';
@@ -85,11 +82,11 @@ export class TrackerService {
       );
   }
 
-  getTrackerVisits(tracker: Tracker) {
-    return this.http.get(this.apiUrl + '/tracker-visits/' + tracker.secret)
+  getTrackerVisits(tracker: Tracker): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + '/tracker-visits/' + tracker.secret)
       .pipe(
         tap(_ => this.log('fetched tracker visits')),
-        catchError(this.handleError('fetch visits list failed'))
+        catchError(this.handleError<any[]>('fetch visits list failed'))
       );
   }
 
@@ -105,7 +102,7 @@ export class TrackerService {
       catchError(this.handleError<Tracker[]>('searchTrackers', []))
     );
   }
-   
+
 
   /** Log a HeroService message with the MessageService */
   private log(message: string, type?: string) {
@@ -122,13 +119,13 @@ export class TrackerService {
    */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
- 
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
- 
+
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`, 'error');
- 
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

@@ -1,7 +1,7 @@
-<div *ngIf="tracker; else loading" class="col-sm-12">
+<div class="col-sm-12">
   <div class="col-sm-6 float-left">
     <a class="px1-box" [class.inactive]="!tracker.active" [class.enabled]="tracker.active"
-    (click)="setTrackerState()">
+    (click)="toggleTrackerState()">
       <div class="px1-msg">
         <h4><kbd>right click</kbd> + <kbd>Copy Image</kbd></h4>
         <small>and paste it in an email</small>
@@ -11,15 +11,15 @@
           Image tracking {{tracker.active ? 'enabled' : 'inactive'}}<br/>
           <small>click to {{tracker.active ? 'disable' : 'activate'}} {{tracker.tname ? '"'+tracker.tname+'"' : 'the tracker'}}</small>
         </p>
-        
+
       </div>
       <img [src]="tracker.src" class="px1"/>
     </a>
   </div>
   <div class="col-sm-6 float-left">
     <label class="col-9">
-      name:
-      <input type="text" class="form-control tracker-input" [(ngModel)]="tracker.tname" 
+      Name: <small>For you to identify it</small>
+      <input type="text" class="form-control tracker-input" [(ngModel)]="tracker.tname"
       name="tname" #name="ngModel" minlength="4" required="required">
       <p *ngIf="name.invalid && (name.dirty || name.touched)"
       class="text-danger">
@@ -30,26 +30,30 @@
         Name must be at least 4 characters long.
       </span>
     </label>
-    <button class="btn btn-success save-button col-3" 
+    <button class="btn btn-success save-button col-3"
             *ngIf="name.valid && name.dirty"
             (click)="editTrackerTname()">save</button>
     <div class="w-100"></div>
     <label class="col-9">
-      user key:
+      Secret Key: <small>a unique code for this image</small>
+      <input type="text" [disabled]="true" class="form-control tracker-input" [value]="tracker.secret">
+    </label>
+    <label class="col-9">
+      Password / Key: <small>If you forget the Secret Key, you can use this "password" to search for all your trackers</small>
       <input type="text" class="form-control tracker-input" [(ngModel)]="tracker.user_secret"
-      name="user_secret" #userSecret="ngModel" minlength="4">
+      name="user_secret" #userSecret="ngModel" minlength="10">
       <p *ngIf="userSecret.invalid && (userSecret.dirty || userSecret.touched)"
           class="text-danger">
-      <span *ngIf="userSecret.errors.minlength">
-        Keyword must be at least 10 characters long.
-      </span>
-    </p>
+        <span *ngIf="userSecret.errors.minlength">
+          Keyword must be at least 10 characters long.
+        </span>
+      </p>
     </label>
-    <button class="btn btn-success save-button col-3" 
+    <button class="btn btn-success save-button col-3"
             *ngIf="userSecret.valid && userSecret.dirty"
             (click)="editTrackerUsecret()">save</button>
     <div class="w-100"></div>
-    
+
     <small class="col">Try using the same "keyword" on <i>all</i> your trackers (think of this as a sort of user-password)
       that will allow you to find them later. Remember to make it long and unique so other users don't find it.
       For example, "PotatoSquid123-Revolution" is a good one, and when searching for it it will list all the trackers
@@ -77,11 +81,10 @@
         <div class="card-body" [title]="visit.added_on">
           <h5 class="card-title">{{visit.address}}</h5>
           <p class="card-text">ip: {{visit.ip}}</p>
-          <a [href]="'https://www.google.com/maps/search/?api=1&query='+visit.lat+','+visit.lng" 
+          <a [href]="'https://www.google.com/maps/search/?api=1&query='+visit.lat+','+visit.lng"
              class="btn btn-primary" target="_blank">map</a>
         </div>
       </div>
-        
+
   </div>
 </div>
-<div *ngIf="loading" class="center-text">loading...</div>

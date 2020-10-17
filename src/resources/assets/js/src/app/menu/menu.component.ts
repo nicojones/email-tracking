@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
 import { Observable, Subject, fromEvent } from 'rxjs';
 
@@ -17,12 +17,15 @@ import {
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements AfterViewInit {
   //tracker$: Observable<Tracker[]>;
   private searchTerms = new Subject<string>();
   public trackerSearch: Tracker[];
   public trackerList: Tracker[];
   public config: Config;
+
+  public toggleDropdown: boolean = false;
+  public toggleSearch: boolean = false;
 
   //public searchQuery: string;
   @ViewChild('searchQuery') searchQuery;
@@ -43,15 +46,13 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  ngOnInit() { }
-
   ngAfterViewInit() {
     this.input$ = fromEvent(this.searchQuery.nativeElement, 'input')
       .pipe(
         debounceTime(500),
         map((e: KeyboardEvent) => e.target['value'])
       );
- 
+
     this.input$.subscribe((searchTerm: string) => {
         this.search(searchTerm)
       });

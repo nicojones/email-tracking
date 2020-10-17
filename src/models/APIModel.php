@@ -24,15 +24,16 @@ class APIModel extends Model
         return self::$instance;
     }
 
-    public function createTracker($tName, $hash, $secret, $ip, $active) {
+    public function createTracker($tName, $userSecret, $hash, $secret, $ip, $active) {
         $query = '
             INSERT INTO tracker
-            (`tname`, `hash`, `secret`, `ip`, `added_on`, `active`)
+            (`tname`, `user_secret`, `hash`, `secret`, `ip`, `added_on`, `active`)
             VALUES
-            (:tName, :hash, :secret, :ip, CURRENT_TIMESTAMP, :active)';
+            (:tName, :userSecret, :hash, :secret, :ip, CURRENT_TIMESTAMP, :active)';
 
         $inserted = $this->query($query, [
             'tName' => $tName,
+            'userSecret' => $userSecret,
             'hash' => $hash,
             'secret' => $secret,
             'ip' => $ip,

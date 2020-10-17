@@ -62,12 +62,13 @@ class APIController extends Controller
         $request = $this->getJSON();
 
         $tName = $request['tname'] ?: 'no_name';
+        $userSecret = $request['user_secret'] ?: '';
         $uniqueHash = $this->getUniqueTrackerHash(10);
         $secret = $this->getUniqueTrackerSecret(10);
         $ip = $_SERVER['REMOTE_ADDR'];
         $active = 0;
 
-        $trackerID = $this->model->createTracker($tName, $uniqueHash, $secret, $ip, $active);
+        $trackerID = $this->model->createTracker($tName, $userSecret, $uniqueHash, $secret, $ip, $active);
 
         $tracker = $this->getTracker($uniqueHash);
 

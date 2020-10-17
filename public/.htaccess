@@ -10,10 +10,15 @@ DirectoryIndex app.php
      allow from all
  </Files>
 
- <FilesMatch "\.(xml|txt|html|js|css|gif|png|jpg)$">
+ <FilesMatch "\.(xml|txt|js|css|gif|png|jpg)$">
      order allow,deny
      allow from all
  </FilesMatch>
+
+ <Files index.html>
+     order allow,deny
+     allow from all
+ </Files>
 # <FilesMatch "\.(gif|jpg|jpeg|png|swf)$">
 # ExpiresDefault A604800
 # Header append Cache-Control "public"

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { TrackerService } from '../tracker.service';
 
@@ -18,39 +18,33 @@ import { environment as env } from '../../environments/environment';
     './tracker.component.scss'
   ]
 })
-export class TrackerComponent implements OnInit {
+export class TrackerComponent {
 
-  @Input() tracker: Tracker;
-  public env: Object;
-  private debounceDelay = 2000;
-  public trackerVisits: Object = {};
+  public tracker: Tracker = {} as Tracker;
+  public env = env;
+  public trackerVisits: any[] = [];
 
-  constructor( 
+  constructor(
     private trackerService: TrackerService,
     private location: Location,
     private route: ActivatedRoute
-   ) { 
-      this.env = env
-      this.route.params.subscribe(val => {
-        let secret = this.route.snapshot.paramMap.get('secret');
-        this.getTracker(secret);
+   ) {
+      this.route.params.subscribe((params: Params) => {
+        this.getTracker(params.secret);
         this.trackerVisits = [];
       })
     }
 
-  ngOnInit() {
-    
-  }
-
-  getTracker(secret: string): void {
+  public getTracker(secret: string): void {
     this.trackerService.get(secret)
       .subscribe(tracker => {
         this.tracker = tracker;
+        TrackerService.userSecret = tracker.user_secret;
       }
     );
   }
 
-  setTrackerState(active: boolean) {
+  public toggleTrackerState() {
     this.tracker.active = !this.tracker.active;
     this.trackerService.setActiveState(this.tracker)
     .subscribe(tracker => {
@@ -58,7 +52,7 @@ export class TrackerComponent implements OnInit {
     })
   }
 
-  editTrackerTname() {
+  public editTrackerTname() {
     if (!this.tracker.tname.trim()) {
       return
     }
@@ -67,18 +61,21 @@ export class TrackerComponent implements OnInit {
       this.tracker = tracker;
     })
   }
-  
-  editTrackerUsecret(user_secret: string) {
+
+  public editTrackerUsecret() {
+    console.log('called this function...')
     if (!this.tracker.user_secret.trim()) {
       return
     }
     this.trackerService.editTrackerUsecret(this.tracker)
     .subscribe(tracker => {
       this.tracker = tracker;
+      console.log('setting user secret')
+      TrackerService.userSecret = tracker.user_secret;
     })
   }
 
-  getTrackerVisits() {
+  public getTrackerVisits() {
     this.trackerService.getTrackerVisits(this.tracker)
     .subscribe(visits => this.trackerVisits = visits)
   }
